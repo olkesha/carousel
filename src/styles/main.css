@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #141414;
+}
+
+:root {
+  --index: calc(1vw + 1vh);
+  --transition: cubic-bezier(.1, .7, 0, 1);
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.items {
+  display: flex;
+  gap: 0.4rem;
+  perspective: calc(var(--index) * 35);
+}
+
+.item {
+  width: calc(var(--index) * 5);
+  height: calc(var(--index) * 20);
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+
+  filter: grayscale();
+  transition: transform 1.25s var(--transition), filter 3s var(--transition);
+  will-change: transform, filter;
+}
+
+.items .item:hover {
+  filter: inherit;
+  transform: translateZ(calc(var(--index) * 5.5));
+}
+
+.item::before, .item::after {
+  content: "";
+  position: absolute;
+  right: calc(var(--index) * -1);
+  height: 100%;
+  width: 30px;
+}
+
+.item::after {
+  left: calc(var(--index) * -1);
+}
+
+/* Right */
+.items .item:hover + * {
+  filter: inherit;
+  transform: translateZ(calc(var(--index) * 3.7)) rotateY(25deg);
+  z-index: -1;
+}
+
+.items .item:hover + * + * {
+  filter: inherit;
+  transform: translateZ(calc(var(--index) * 2.4)) rotateY(25deg);
+  z-index: -2;
+}
+
+.items .item:hover + * + * + * {
+  filter: inherit;
+  transform: translateZ(calc(var(--index) * 1)) rotateY(18deg);
+  z-index: -3;
+}
+
+.items .item:hover + * + * + * + * {
+  z-index: -4;
+}
+
+/* Left */
+.items .item:has(+ :hover) {
+  filter: inherit;
+  transform: translateZ(calc(var(--index) * 3.7)) rotateY(-25deg);
+}
+
+.items .item:has(+ * + :hover) {
+  filter: inherit;
+  transform: translateZ(calc(var(--index) * 2.4)) rotateY(-25deg);
+}
+
+.items .item:has(+ * + * + :hover) {
+  filter: inherit;
+  transform: translateZ(calc(var(--index) * 1)) rotateY(-18deg);
+}
